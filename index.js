@@ -32,7 +32,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     app.post('/register',async(req,res)=>{
-        const {name,email,number,password}= req.body;
+        const {name,email,number,password,role}= req.body;
         const existingUser=await userCollection.findOne({email});
         if(existingUser){
             return  res.status(400).send({ message: 'Email already exists. Please use a different email.' });
@@ -44,6 +44,7 @@ async function run() {
             email,
             number,
             password:hashedPin,
+            role,
             status:"pending"
         }
         
